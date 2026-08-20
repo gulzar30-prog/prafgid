@@ -1,9 +1,7 @@
 # backend/collectors/rss_collector.py
 import feedparser
-import requests
-from datetime import datetime
-from typing import List, Dict, Any
 import logging
+from typing import List, Dict, Any
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +10,7 @@ def fetch_rss_feed(url: str) -> List[Dict[str, Any]]:
     try:
         feed = feedparser.parse(url)
         items = []
-        for entry in feed.entries[:20]:  # limit per run
+        for entry in feed.entries[:20]:
             items.append({
                 "title": entry.get("title", ""),
                 "link": entry.get("link", ""),

@@ -1,70 +1,43 @@
-# config/sources.yaml - ALL WORKING FEEDS
+# config/sources.yaml
 sources:
-  # ============================================
-  # ISLAMIC FINANCE
-  # ============================================
-  
   - name: "AAOIFI News"
     url: "https://aaoifi.com/feed/"
     type: "rss"
     freshness: "120m"
     category: ["islamic_finance", "standards"]
-    tier: 1
 
-  # ============================================
-  # PAKISTAN
-  # ============================================
-  
   - name: "Dawn Pakistan (Business)"
     url: "https://www.dawn.com/feeds/business"
     type: "rss"
     freshness: "60m"
     category: ["pakistan", "finance", "business"]
-    tier: 2
-  
+
   - name: "The Express Tribune (Business)"
     url: "https://tribune.com.pk/feed/business"
     type: "rss"
     freshness: "60m"
     category: ["pakistan", "finance", "business"]
-    tier: 2
 
-  # ============================================
-  # SUSTAINABILITY & ESG
-  # ============================================
-  
   - name: "ESG News"
     url: "https://esgnews.com/feed/"
     type: "rss"
     freshness: "180m"
-    category: ["sustainability", "esg", "climate"]
-    tier: 3
+    category: ["sustainability", "esg"]
 
-  # ============================================
-  # AI & TECHNOLOGY
-  # ============================================
-  
   - name: "MIT Technology Review"
     url: "https://www.technologyreview.com/feed/"
     type: "rss"
     freshness: "180m"
-    category: ["ai", "technology", "innovation"]
-    tier: 3
+    category: ["ai", "technology"]
 
-  # ============================================
-  # RESEARCH (ACADEMIC PAPERS)
-  # ============================================
-  
   - name: "arXiv AI (Research Papers)"
     url: "http://export.arxiv.org/rss/cs.AI"
     type: "rss"
     freshness: "6h"
-    category: ["research", "ai", "machine_learning"]
-    tier: 1
-  
+    category: ["research", "ai"]
+
   - name: "arXiv Finance"
     url: "http://export.arxiv.org/rss/q-fin"
     type: "rss"
     freshness: "6h"
-    category: ["research", "finance", "econometrics"]
-    tier: 1
+    category: ["research", "finance"]

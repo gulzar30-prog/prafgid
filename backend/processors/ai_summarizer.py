@@ -14,7 +14,6 @@ def summarize_and_score(text: str, title: str, categories_weights: dict = None):
     
     # 2. Load category keywords from config/categories.yaml
     import yaml
-    import os
     from pathlib import Path
     
     config_path = Path(__file__).parent.parent.parent / "config" / "categories.yaml"

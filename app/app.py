@@ -1,15 +1,15 @@
-# app/app.py
+# app.py
 import sys
+import os
 from pathlib import Path
 
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
+# Add current directory to sys.path so that 'backend' can be found
+sys.path.insert(0, str(Path(__file__).parent))
 
 import streamlit as st
 from backend.database import SessionLocal
 from backend.models import IntelligenceItem
+from backend.scheduler import collect_and_process
 import pandas as pd
 from datetime import datetime
 from sqlalchemy import text
@@ -18,6 +18,15 @@ st.set_page_config(page_title="PRAFGID", layout="wide")
 
 st.sidebar.title("🧠 PRAFGID")
 st.sidebar.caption("Personal Intelligence Centre")
+
+# ---- Refresh Data Button ----
+if st.sidebar.button("🔄 Refresh Data"):
+    with st.spinner("Collecting latest intelligence..."):
+        try:
+            collect_and_process()
+            st.success("Data updated successfully!")
+        except Exception as e:
+            st.error(f"Error: {e}")
 
 page = st.sidebar.radio(
     "Navigate",
@@ -37,7 +46,7 @@ def get_items_by_categories(category_list):
     if not category_list:
         return []
     placeholders = ",".join([f"'{cat}'" for cat in category_list])
-    sql = text(f"""
+    sql = f"""
         SELECT * FROM intelligence_items
         WHERE EXISTS (
             SELECT 1 FROM json_each(intelligence_items.category)
@@ -45,18 +54,9 @@ def get_items_by_categories(category_list):
         )
         ORDER BY published_at DESC
         LIMIT 50
-    """)
-    # Execute and map to model
-    result = db.execute(sql)
-    # Convert rows to IntelligenceItem objects
-    items = []
-    for row in result:
-        # row is a Row object; we can create a dict and then map
-        # Simpler: get ids and query
-        # But we can also use db.query with from_statement
-        pass
-    # Better: use from_statement
-    items = db.query(IntelligenceItem).from_statement(sql).all()
+    """
+    stmt = text(sql)
+    items = db.query(IntelligenceItem).from_statement(stmt).all()
     return items
 
 def display_items(items, title):
@@ -99,7 +99,7 @@ if page == "🏠 Home":
         st.subheader("📰 Latest Intelligence")
         st.dataframe(df, use_container_width=True)
     else:
-        st.info("No data collected yet. Run the scheduler to populate.")
+        st.info("No data yet. Click 'Refresh Data' in the sidebar.")
 
 # ==================== PAKISTAN & FINANCE ====================
 elif page == "🇵🇰 Pakistan & Finance":

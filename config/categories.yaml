@@ -1,32 +1,28 @@
 categories:
   islamic_finance:
     weight: 95
-    keywords: ["sukuk", "takaful", "shariah", ...]
+    keywords: ["sukuk", "takaful", "shariah", "islamic banking", "AAOIFI", "IFSB", "islamic finance", "islamic capital market", "sharia compliant", "murabaha", "ijara", "mudaraba", "musyaraka", "zakah", "waqf", "islamic microfinance"]
 
   pakistan:
     weight: 90
-    keywords: ["Pakistan", "Dawn", "Tribune", ...]
+    keywords: ["Pakistan", "Dawn", "Tribune", "Karachi", "Lahore", "Islamabad", "Punjab", "Sindh", "Khyber", "Balochistan", "federal", "provincial"]
 
   finance:
     weight: 85
-    keywords: ["stock market", "banking", ...]
-
-  business:
-    weight: 80
-    keywords: ["company", "corporate", ...]
+    keywords: ["stock market", "banking", "investment", "inflation", "interest rate", "GDP", "budget", "fiscal", "monetary", "currency", "PKR", "dollar"]
 
   sustainability:
     weight: 90
-    keywords: ["ESG", "green finance", ...]
-
-  esg:
-    weight: 90
-    keywords: ["ESG", "sustainability", ...]
+    keywords: ["ESG", "green finance", "sustainability", "climate", "carbon", "emissions", "environmental", "social", "governance", "green bond", "climate risk", "net zero", "renewable"]
 
   ai:
     weight: 85
-    keywords: ["artificial intelligence", "machine learning", ...]
+    keywords: ["artificial intelligence", "machine learning", "deep learning", "neural network", "LLM", "generative AI", "ChatGPT", "automation", "RAG", "computer vision", "NLP", "transformer"]
 
   research:
     weight: 90
-    keywords: ["study", "paper", "methodology", ...]
+    keywords: ["study", "paper", "methodology", "literature", "research gap", "hypothesis", "data", "analysis", "findings", "conclusion", "abstract", "publication"]
+
+  business:
+    weight: 80
+    keywords: ["company", "corporate", "industry", "market", "trade", "export", "import", "revenue", "profit", "loss", "merger", "acquisition", "CEO"]

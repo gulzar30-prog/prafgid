@@ -8,10 +8,6 @@ import logging
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from dotenv import load_dotenv
-env_path = project_root / ".env"
-load_dotenv(dotenv_path=env_path)
-
 from backend.database import SessionLocal
 from backend.models import IntelligenceItem
 from backend.collectors.rss_collector import fetch_rss_feed
@@ -79,10 +75,9 @@ def collect_and_process():
                     logger.debug(f"  Skipping duplicate: {title[:50]}...")
                     continue
                 
-                # Prepare content for AI summarization
+                # Prepare content for summarization
                 full_text = entry.get("content") or entry.get("summary") or title
                 
-                # Use non-AI summarizer (keyword-based)
                 try:
                     ai_result = summarize_and_score(full_text, title)
                     summary = ai_result.get("summary", "No summary available")
@@ -149,7 +144,6 @@ def run_scheduler():
         logger.info("🛑 Scheduler stopped by user.")
 
 if __name__ == "__main__":
-    # Check for command line argument
     if len(sys.argv) > 1 and sys.argv[1] == "--once":
         run_once()
     else:
