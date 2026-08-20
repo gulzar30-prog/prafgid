@@ -1,36 +1,32 @@
 # backend/database.py
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import OperationalError
 
-# Load environment
+# Always use a local SQLite file in the 'data' folder
 project_root = Path(__file__).parent.parent
-env_path = project_root / ".env"
-load_dotenv(dotenv_path=env_path)
+data_dir = project_root / "data"
+data_dir.mkdir(exist_ok=True)
 
-# Use a fixed path in the project root
-DB_PATH = project_root / "data" / "prafgid.db"
-DB_PATH.parent.mkdir(exist_ok=True)
+# Construct absolute path for SQLite
+db_path = data_dir / "prafgid.db"
+DATABASE_URL = f"sqlite:///{db_path.as_posix()}"
 
-DATABASE_URL = f"sqlite:///{DB_PATH.as_posix()}"
-
+# SQLite needs check_same_thread=False
 connect_args = {"check_same_thread": False}
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Auto-create tables if they don't exist
 def ensure_tables():
     from backend.models import Base
+    from sqlalchemy.exc import OperationalError
     try:
         from sqlalchemy import text
         with engine.connect() as conn:
             conn.execute(text("SELECT 1 FROM intelligence_items LIMIT 1"))
     except OperationalError:
-        print("⚠️  Table 'intelligence_items' not found. Creating now...")
+        print("Creating tables...")
         Base.metadata.create_all(engine)
-        print("✅ Tables created.")
 
 ensure_tables()
