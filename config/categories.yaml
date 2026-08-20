@@ -1,0 +1,32 @@
+categories:
+  islamic_finance:
+    weight: 95
+    keywords: ["sukuk", "takaful", "shariah", ...]
+
+  pakistan:
+    weight: 90
+    keywords: ["Pakistan", "Dawn", "Tribune", ...]
+
+  finance:
+    weight: 85
+    keywords: ["stock market", "banking", ...]
+
+  business:
+    weight: 80
+    keywords: ["company", "corporate", ...]
+
+  sustainability:
+    weight: 90
+    keywords: ["ESG", "green finance", ...]
+
+  esg:
+    weight: 90
+    keywords: ["ESG", "sustainability", ...]
+
+  ai:
+    weight: 85
+    keywords: ["artificial intelligence", "machine learning", ...]
+
+  research:
+    weight: 90
+    keywords: ["study", "paper", "methodology", ...]
