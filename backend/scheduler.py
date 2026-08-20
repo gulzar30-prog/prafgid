@@ -1,6 +1,5 @@
 # backend/scheduler.py
 import sys
-import time
 from pathlib import Path
 import logging
 
@@ -70,18 +69,15 @@ def collect_and_process():
                 if not title:
                     continue
                     
-                # Check for duplicates
                 if is_duplicate(db, title, entry.get("content", "")):
                     logger.debug(f"  Skipping duplicate: {title[:50]}...")
                     continue
                 
-                # Prepare content for summarization
                 full_text = entry.get("content") or entry.get("summary") or title
                 
                 try:
                     ai_result = summarize_and_score(full_text, title)
                     summary = ai_result.get("summary", "No summary available")
-                    scores = ai_result.get("scores", {})
                     relevance = ai_result.get("overall_relevance", 50)
                     detected_categories = ai_result.get("categories", categories)
                 except Exception as e:
@@ -90,7 +86,6 @@ def collect_and_process():
                     relevance = 50
                     detected_categories = categories
                 
-                # Create database entry
                 item = IntelligenceItem(
                     title=title,
                     content=full_text,
@@ -100,8 +95,8 @@ def collect_and_process():
                     published_at=datetime.utcnow(),
                     category=detected_categories,
                     relevance_score=relevance,
-                    importance_score=scores.get("importance", 50) if isinstance(scores, dict) else 50,
-                    processed_data=ai_result if isinstance(ai_result, dict) else {}
+                    importance_score=50,
+                    processed_data={}
                 )
                 
                 try:
@@ -122,29 +117,4 @@ def collect_and_process():
     logger.info(f"✅ Collection cycle completed. Total new items saved: {total_saved}")
     logger.info("=" * 50)
 
-def run_once():
-    """Run one collection cycle (for testing)"""
-    logger.info("Running single collection cycle...")
-    collect_and_process()
-
-def run_scheduler():
-    """Run the scheduler continuously"""
-    logger.info("🚀 Scheduler started. Press Ctrl+C to stop.")
-    logger.info("Collection will run every 15 minutes.")
-    
-    # Run once immediately
-    collect_and_process()
-    
-    # Then run every 15 minutes
-    try:
-        while True:
-            time.sleep(900)  # 15 minutes
-            collect_and_process()
-    except KeyboardInterrupt:
-        logger.info("🛑 Scheduler stopped by user.")
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--once":
-        run_once()
-    else:
-        run_scheduler()
+# No scheduler loop – you call collect_and_process() manually from the app.
