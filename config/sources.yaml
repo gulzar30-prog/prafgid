@@ -145,3 +145,35 @@ sources:
     type: "rss"
     freshness: "180m"
     category: ["software_python"]
+
+  # ---- Top News (international + Pakistani top newspapers) ----
+
+  - name: "BBC News (World)"
+    url: "http://feeds.bbci.co.uk/news/world/rss.xml"
+    type: "rss"
+    freshness: "30m"
+    category: ["top_news"]
+
+  - name: "Google News - Top Stories (World)"
+    url: "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "30m"
+    category: ["top_news"]
+
+  - name: "Google News - Top Stories (Pakistan)"
+    url: "https://news.google.com/rss?hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "30m"
+    category: ["top_news", "pakistan"]
+
+  - name: "Dawn (Home)"
+    url: "https://www.dawn.com/feeds/home"
+    type: "rss"
+    freshness: "30m"
+    category: ["top_news", "pakistan"]
+
+  - name: "The Express Tribune (Home)"
+    url: "https://tribune.com.pk/feed/home"
+    type: "rss"
+    freshness: "30m"
+    category: ["top_news", "pakistan"]
