@@ -1,10 +1,10 @@
-# app/app.py
+# app.py
 import sys
 import os
 from pathlib import Path
 
 # Add project root to path
-project_root = Path(__file__).parent.parent
+project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
 from dotenv import load_dotenv
@@ -23,20 +23,9 @@ st.set_page_config(page_title="PRAFGID", layout="wide")
 st.sidebar.title("🧠 PRAFGID")
 st.sidebar.caption("Personal Intelligence Centre")
 
-page = st.sidebar.radio(
-    "Navigate",
-    [
-        "🏠 Home",
-        "🇵🇰 Pakistan & Finance",
-        "🕌 Islamic Finance",
-        "🤖 AI & Research",
-        "🌱 Sustainability"
-    ]
-)
-
 db = SessionLocal()
 
-def get_items_by_categories(category_list):
+def get_items_by_categories(category_list, limit=50):
     """Return IntelligenceItem objects that have any of the given categories."""
     if not category_list:
         return []
@@ -48,24 +37,13 @@ def get_items_by_categories(category_list):
             WHERE value IN ({placeholders})
         )
         ORDER BY published_at DESC
-        LIMIT 50
+        LIMIT {limit}
     """)
-    # Execute and map to model
-    result = db.execute(sql)
-    # Convert rows to IntelligenceItem objects
-    items = []
-    for row in result:
-        # row is a Row object; we can create a dict and then map
-        # Simpler: get ids and query
-        # But we can also use db.query with from_statement
-        pass
-    # Better: use from_statement
-    items = db.query(IntelligenceItem).from_statement(sql).all()
-    return items
+    return db.query(IntelligenceItem).from_statement(sql).all()
 
-def display_items(items, title):
+def display_items(items):
     if not items:
-        st.info("No items found in this category.")
+        st.info("No items found in this category yet.")
         return
     for item in items:
         with st.expander(f"{item.title}  (Relevance: {item.relevance_score:.0f})"):
@@ -74,14 +52,40 @@ def display_items(items, title):
             if item.source_url:
                 st.link_button("View Source", item.source_url)
 
-# ==================== HOME ====================
-if page == "🏠 Home":
+def category_tab(title, categories):
+    st.title(title)
+    display_items(get_items_by_categories(categories))
+
+# ==================== TABS ====================
+(
+    tab_home,
+    tab_pakistan,
+    tab_islamic,
+    tab_markets,
+    tab_research,
+    tab_software,
+    tab_ai_fintech,
+    tab_regulatory,
+) = st.tabs(
+    [
+        "🏠 Home",
+        "🇵🇰 Pakistan Finance",
+        "🕌 Islamic Finance",
+        "📈 Financial Markets",
+        "📚 Research & Publications",
+        "🧮 Software Updates",
+        "🤖 AI, FinTech & Digital Finance",
+        "📜 Regulatory & Policy",
+    ]
+)
+
+# ---- Home ----
+with tab_home:
     st.title("📊 Personal Intelligence Dashboard")
     st.caption(f"Last updated: {datetime.now().strftime('%H:%M')}")
     total_count = db.query(IntelligenceItem).count()
     st.write(f"🔍 Total items in database: {total_count}")
     recent = db.query(IntelligenceItem).order_by(IntelligenceItem.published_at.desc()).limit(50).all()
-    db.close()
     if recent:
         critical = [item for item in recent if item.relevance_score and item.relevance_score > 80]
         if critical:
@@ -105,30 +109,44 @@ if page == "🏠 Home":
     else:
         st.info("No data collected yet. Run the scheduler to populate.")
 
-# ==================== PAKISTAN & FINANCE ====================
-elif page == "🇵🇰 Pakistan & Finance":
-    st.title("🇵🇰 Pakistan & Financial Intelligence")
-    items = get_items_by_categories(["pakistan", "finance", "business"])
-    db.close()
-    display_items(items, "Pakistan & Finance")
+# ---- Pakistan Finance ----
+with tab_pakistan:
+    category_tab("🇵🇰 Pakistan Financial Intelligence", ["pakistan", "finance", "business"])
 
-# ==================== ISLAMIC FINANCE ====================
-elif page == "🕌 Islamic Finance":
-    st.title("🕌 Islamic Finance Intelligence")
-    items = get_items_by_categories(["islamic_finance"])
-    db.close()
-    display_items(items, "Islamic Finance")
+# ---- Islamic Finance ----
+with tab_islamic:
+    category_tab("🕌 Islamic Finance Intelligence", ["islamic_finance"])
 
-# ==================== AI & RESEARCH ====================
-elif page == "🤖 AI & Research":
-    st.title("🤖 AI & Research Intelligence")
-    items = get_items_by_categories(["ai", "research"])
-    db.close()
-    display_items(items, "AI & Research")
+# ---- Financial Markets ----
+with tab_markets:
+    category_tab("📈 Financial Markets Intelligence", ["financial_markets"])
 
-# ==================== SUSTAINABILITY ====================
-elif page == "🌱 Sustainability":
-    st.title("🌱 Sustainability & ESG Intelligence")
-    items = get_items_by_categories(["sustainability", "esg"])
-    db.close()
-    display_items(items, "Sustainability")
+# ---- Research & Publications ----
+with tab_research:
+    category_tab("📚 Research & Publications", ["research"])
+
+# ---- Software Updates ----
+with tab_software:
+    st.title("🧮 Statistical & Econometric Software Updates")
+    software_sections = [
+        ("R / RStudio", ["software_r"]),
+        ("Stata", ["software_stata"]),
+        ("EViews", ["software_eviews"]),
+        ("SPSS", ["software_spss"]),
+        ("SmartPLS", ["software_smartpls"]),
+        ("Python", ["software_python"]),
+    ]
+    software_tabs = st.tabs([name for name, _ in software_sections])
+    for st_tab, (name, cats) in zip(software_tabs, software_sections):
+        with st_tab:
+            display_items(get_items_by_categories(cats))
+
+# ---- AI, FinTech & Digital Finance ----
+with tab_ai_fintech:
+    category_tab("🤖 AI, FinTech & Digital Finance", ["ai", "fintech"])
+
+# ---- Regulatory & Policy ----
+with tab_regulatory:
+    category_tab("📜 Regulatory & Policy Updates", ["regulatory_policy"])
+
+db.close()

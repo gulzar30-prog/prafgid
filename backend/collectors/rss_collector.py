@@ -15,7 +15,7 @@ def fetch_rss_feed(url: str) -> List[Dict[str, Any]]:
                 "title": entry.get("title", ""),
                 "link": entry.get("link", ""),
                 "published": entry.get("published", ""),
-                "published_parsed": entry.get("published_parsed"),
+                "published_parsed": entry.get("published_parsed") or entry.get("updated_parsed"),
                 "summary": entry.get("summary", ""),
                 "content": entry.get("content", [{"value": ""}])[0].get("value", ""),
                 "source_name": feed.feed.get("title", "Unknown RSS"),

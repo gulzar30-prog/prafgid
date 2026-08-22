@@ -1,5 +1,6 @@
 # backend/scheduler.py
 import sys
+import re
 from pathlib import Path
 import logging
 
@@ -21,6 +22,33 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+_MONTHS = {m: i for i, m in enumerate(
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], start=1
+)}
+
+def parse_published(entry):
+    """Best-effort published date. Some feeds (e.g. Stata Headlines) omit the
+    year from their pubDate, which feedparser can't parse into published_parsed."""
+    published_parsed = entry.get("published_parsed")
+    if published_parsed:
+        return datetime(*published_parsed[:6])
+
+    match = re.search(r"(\d{1,2})\s+([A-Za-z]{3})\s+(\d{2}):(\d{2}):(\d{2})", entry.get("published", ""))
+    if match:
+        day, mon, hh, mm, ss = match.groups()
+        month = _MONTHS.get(mon)
+        if month:
+            year = datetime.utcnow().year
+            try:
+                candidate = datetime(year, month, int(day), int(hh), int(mm), int(ss))
+                if candidate > datetime.utcnow():
+                    candidate = candidate.replace(year=year - 1)
+                return candidate
+            except ValueError:
+                pass
+
+    return datetime.utcnow()
 
 def load_sources():
     """Load sources from config/sources.yaml"""
@@ -79,20 +107,22 @@ def collect_and_process():
                     ai_result = summarize_and_score(full_text, title)
                     summary = ai_result.get("summary", "No summary available")
                     relevance = ai_result.get("overall_relevance", 50)
-                    detected_categories = ai_result.get("categories", categories)
+                    detected_categories = sorted(set(categories) | set(ai_result.get("categories", [])))
                 except Exception as e:
                     logger.warning(f"Processing failed: {e}")
                     summary = "Processing failed"
                     relevance = 50
                     detected_categories = categories
-                
+
+                published_at = parse_published(entry)
+
                 item = IntelligenceItem(
                     title=title,
                     content=full_text,
                     summary=summary,
                     source_name=source_name,
                     source_url=entry.get("link", ""),
-                    published_at=datetime.utcnow(),
+                    published_at=published_at,
                     category=detected_categories,
                     relevance_score=relevance,
                     importance_score=50,

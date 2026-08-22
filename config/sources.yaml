@@ -18,6 +18,12 @@ sources:
     freshness: "60m"
     category: ["pakistan", "finance", "business"]
 
+  - name: "Business Recorder (Business & Finance)"
+    url: "https://www.brecorder.com/feeds/business-finance"
+    type: "rss"
+    freshness: "60m"
+    category: ["pakistan", "finance", "business"]
+
   - name: "ESG News"
     url: "https://esgnews.com/feed/"
     type: "rss"
@@ -41,3 +47,101 @@ sources:
     type: "rss"
     freshness: "6h"
     category: ["research", "finance"]
+
+  - name: "arXiv Econometrics"
+    url: "http://export.arxiv.org/rss/econ.EM"
+    type: "rss"
+    freshness: "6h"
+    category: ["research", "software_python"]
+
+  # ---- Pakistan Finance / Regulatory & Policy ----
+
+  - name: "State Bank of Pakistan (News)"
+    url: "https://news.google.com/rss/search?q=%22State+Bank+of+Pakistan%22&hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "60m"
+    category: ["pakistan", "finance", "regulatory_policy"]
+
+  - name: "SECP Pakistan (News)"
+    url: "https://news.google.com/rss/search?q=SECP+Pakistan&hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "120m"
+    category: ["pakistan", "regulatory_policy"]
+
+  - name: "Pakistan Stock Exchange (News)"
+    url: "https://news.google.com/rss/search?q=%22Pakistan+Stock+Exchange%22+OR+PSX+OR+%22KSE-100%22&hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "60m"
+    category: ["pakistan", "finance", "financial_markets"]
+
+  - name: "Basel III & Banking Regulation (News)"
+    url: "https://news.google.com/rss/search?q=%22Basel+III%22+OR+%22banking+regulation%22&hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "180m"
+    category: ["regulatory_policy"]
+
+  # ---- Islamic Finance ----
+
+  - name: "IFSB (News)"
+    url: "https://news.google.com/rss/search?q=IFSB+%22Islamic+Financial+Services+Board%22&hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "180m"
+    category: ["islamic_finance", "regulatory_policy"]
+
+  - name: "Islamic Banking Pakistan (News)"
+    url: "https://news.google.com/rss/search?q=%22Islamic+banking%22+Pakistan&hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "120m"
+    category: ["islamic_finance", "pakistan"]
+
+  # ---- FinTech & Digital Finance ----
+
+  - name: "FinTech Pakistan (News)"
+    url: "https://news.google.com/rss/search?q=fintech+Pakistan+OR+%22digital+banking%22+Pakistan&hl=en-PK&gl=PK&ceid=PK:en"
+    type: "rss"
+    freshness: "120m"
+    category: ["fintech", "pakistan"]
+
+  - name: "Global FinTech & CBDC (News)"
+    url: "https://news.google.com/rss/search?q=fintech+OR+%22central+bank+digital+currency%22&hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "180m"
+    category: ["fintech", "ai"]
+
+  # ---- Statistical & Econometric Software ----
+
+  - name: "R-bloggers (R Programming)"
+    url: "https://www.r-bloggers.com/feed/"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_r"]
+
+  - name: "Stata Headlines"
+    url: "https://www.stata.com/headlines.rss"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_stata"]
+
+  - name: "EViews Blog"
+    url: "https://blog.eviews.com/feeds/posts/default"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_eviews"]
+
+  - name: "SPSS Statistics (News)"
+    url: "https://news.google.com/rss/search?q=%22SPSS+Statistics%22+IBM&hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_spss"]
+
+  - name: "SmartPLS & PLS-SEM (News)"
+    url: "https://news.google.com/rss/search?q=%22SmartPLS%22+OR+%22partial+least+squares%22+software&hl=en-US&gl=US&ceid=US:en"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_smartpls"]
+
+  - name: "Real Python"
+    url: "https://realpython.com/atom.xml"
+    type: "rss"
+    freshness: "180m"
+    category: ["software_python"]

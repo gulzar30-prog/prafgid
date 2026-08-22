@@ -5,11 +5,11 @@ categories:
 
   pakistan:
     weight: 90
-    keywords: ["Pakistan", "Dawn", "Tribune", "Karachi", "Lahore", "Islamabad", "Punjab", "Sindh", "Khyber", "Balochistan", "federal", "provincial"]
+    keywords: ["Pakistan", "Dawn", "Tribune", "Karachi", "Lahore", "Islamabad", "Punjab", "Sindh", "Khyber", "Balochistan", "federal", "provincial", "State Bank of Pakistan", "SBP", "PSX", "SECP", "KSE-100"]
 
   finance:
     weight: 85
-    keywords: ["stock market", "banking", "investment", "inflation", "interest rate", "GDP", "budget", "fiscal", "monetary", "currency", "PKR", "dollar"]
+    keywords: ["stock market", "banking", "investment", "inflation", "interest rate", "GDP", "budget", "fiscal", "monetary", "currency", "PKR", "dollar", "circular", "monetary policy", "prudential regulations"]
 
   sustainability:
     weight: 90
@@ -26,3 +26,39 @@ categories:
   business:
     weight: 80
     keywords: ["company", "corporate", "industry", "market", "trade", "export", "import", "revenue", "profit", "loss", "merger", "acquisition", "CEO"]
+
+  financial_markets:
+    weight: 88
+    keywords: ["PSX", "KSE-100", "stock exchange", "equities", "bond market", "capital market", "IPO", "trading volume", "index", "shares", "brokerage"]
+
+  regulatory_policy:
+    weight: 90
+    keywords: ["SBP", "SECP", "circular", "monetary policy", "prudential regulation", "Basel", "IFRS", "taxation", "fiscal policy", "regulatory", "compliance", "central bank"]
+
+  fintech:
+    weight: 85
+    keywords: ["fintech", "digital banking", "mobile banking", "neobank", "blockchain", "CBDC", "digital finance", "payment gateway", "digital wallet", "cryptocurrency"]
+
+  software_r:
+    weight: 90
+    keywords: ["R programming", "RStudio", "Posit", "tidyverse", "ggplot", "CRAN", "R package", "r-bloggers", "dplyr", "shiny"]
+
+  software_stata:
+    weight: 90
+    keywords: ["Stata", "StataCorp", "Statalist", "do-file", "StataNow", "stata command"]
+
+  software_eviews:
+    weight: 90
+    keywords: ["EViews", "IHS Markit", "VAR model", "impulse response", "eviews add-in", "structural VAR", "econometric software"]
+
+  software_spss:
+    weight: 90
+    keywords: ["SPSS", "IBM SPSS", "PASW", "spss statistics"]
+
+  software_smartpls:
+    weight: 90
+    keywords: ["SmartPLS", "PLS-SEM", "partial least squares", "structural equation modeling", "PLS path model"]
+
+  software_python:
+    weight: 90
+    keywords: ["Python", "pandas", "statsmodels", "scikit-learn", "Jupyter", "NumPy", "matplotlib", "python package"]
